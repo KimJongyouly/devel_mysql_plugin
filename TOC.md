@@ -5,65 +5,65 @@
 
 ---
 
-## 제1장: Hello World UDF — 첫 번째 플러그인 만들기
+## [제1장: Hello World UDF — 첫 번째 플러그인 만들기](pages/01-ch.md)
 
-### 1.1 UDF란 무엇인가
+### [1.1 UDF란 무엇인가](pages/01-ch.md#11-udf란-무엇인가)
 - User Defined Function 개념
 - 스칼라 UDF vs 집계 UDF vs 스토리지 엔진
 - UDF가 필요한 상황
 
-### 1.2 개발 환경 준비
+### [1.2 개발 환경 준비](pages/01-ch.md#12-개발-환경-준비)
 - macOS 환경 설정 (Homebrew + MySQL 8.0)
 - Linux 환경 설정 (Ubuntu + MariaDB)
 - 필수 헤더 및 빌드 도구 확인
 
-### 1.3 첫 번째 UDF 작성
+### [1.3 첫 번째 UDF 작성](pages/01-ch.md#13-첫-번째-udf-작성)
 - `mysql.h` 헤더 구조
 - `_init()`, 메인 함수, `_deinit()` 세 가지 함수
 - "Hello World Mysql Plugin-UDF" 반환하기
 
-### 1.4 빌드와 설치
+### [1.4 빌드와 설치](pages/01-ch.md#14-빌드와-설치)
 - Makefile 작성법
 - `make` → `.so` 파일 생성
 - MySQL 플러그인 디렉터리에 설치
 - `CREATE FUNCTION` 으로 등록
 
-### 1.5 동작 확인
+### [1.5 동작 확인](pages/01-ch.md#15-동작-확인)
 - `SELECT helloworld();` 실행
 - `DROP FUNCTION` 으로 등록 해제
 - 트러블슈팅: `mysql.h not found` 등
 
 ---
 
-## 제2장: 인자를 받는 UDF — Hello World with Args
+## [제2장: 인자를 받는 UDF — Hello World with Args](pages/02-ch.md)
 
-### 2.1 UDF 인자 처리 구조
+### [2.1 UDF 인자 처리 구조](pages/02-ch.md#21-udf-인자-처리-구조)
 - `UDF_ARGS` 구조체
 - 인자 타입 검증 (`STRING_RESULT`)
 - NULL 처리
 
-### 2.2 동적 메모리 관리
+### [2.2 동적 메모리 관리](pages/02-ch.md#22-동적-메모리-관리)
 - `initid->ptr`로 버퍼 할당
 - `_deinit()`에서 해제
 
-### 2.3 구현: `helloworld(name)` 함수
+### [2.3 구현: `helloworld(name)` 함수](pages/02-ch.md#23-구현-helloworldname-함수)
 - `"Welcome {name}, HelloWorld Mysql Plugin"` 반환
 - 문자열 조합 로직
 
-### 2.4 테스트
+### [2.4 테스트](pages/02-ch.md#24-테스트)
 - 다양한 입력값 테스트
 - NULL 입력 처리 확인
 - 오류 케이스 확인
 
 ---
 
-## 제3장: 집계 UDF — GROUP BY와 함께 중앙값 계산
+## [제3장: 집계 UDF — GROUP BY와 함께 중앙값 계산](pages/03-ch.md)
 
-### 3.1 집계 UDF란
+### [3.1 집계 UDF란](pages/03-ch.md#31-집계-udf란)
 - 스칼라 UDF와 집계 UDF의 차이
 - MySQL Aggregate UDF의 6단계 라이프사이클
 
-### 3.2 6개 함수 구조
+### [3.2 6개 함수 구조](pages/03-ch.md#32-6개-함수-구조)
 - `_init()`: 초기화
 - `_clear()`: 그룹 초기화 (GROUP BY 핵심)
 - `_reset()`: 첫 번째 행 처리
@@ -71,76 +71,76 @@
 - 메인 함수: 결과 계산
 - `_deinit()`: 메모리 해제
 
-### 3.3 중앙값 알고리즘
+### [3.3 중앙값 알고리즘](pages/03-ch.md#33-중앙값-알고리즘)
 - `std::vector<double>` 누적
 - `std::sort()` 후 중앙값 추출
 - 짝수/홀수 처리
 
-### 3.4 `CREATE AGGREGATE FUNCTION` 으로 등록
-### 3.5 `GROUP BY` 와 함께 사용하기
+### [3.4 `CREATE AGGREGATE FUNCTION` 으로 등록](pages/03-ch.md#34-create-aggregate-function-으로-등록)
+### [3.5 `GROUP BY` 와 함께 사용하기](pages/03-ch.md#35-group-by-와-함께-사용하기)
 
 ---
 
-## 제4장: 데몬 플러그인 — OS 리소스 모니터링
+## [제4장: 데몬 플러그인 — OS 리소스 모니터링](pages/04-ch.md)
 
-### 4.1 데몬 플러그인이란
+### [4.1 데몬 플러그인이란](pages/04-ch.md#41-데몬-플러그인이란)
 - Daemon Plugin 구조
 - `MYSQL_DAEMON_PLUGIN` 매크로
 - UDF와의 차이점
 
-### 4.2 백그라운드 스레드 구현
+### [4.2 백그라운드 스레드 구현](pages/04-ch.md#42-백그라운드-스레드-구현)
 - `pthread_create()`로 모니터링 스레드 시작
 - `pthread_join()`으로 안전한 종료
 - `INSTALL PLUGIN` / `UNINSTALL PLUGIN` 연동
 
-### 4.3 OS 메트릭 수집
+### [4.3 OS 메트릭 수집](pages/04-ch.md#43-os-메트릭-수집)
 - macOS: Mach API (`host_processor_info`, `vm_statistics64`)
 - macOS: IOKit (`IOBlockStorageDriver`)
 - Linux: `sysinfo()` 시스템 콜
 
-### 4.4 MySQL STATUS 변수 노출
+### [4.4 MySQL STATUS 변수 노출](pages/04-ch.md#44-mysql-status-변수-노출)
 - `SHOW STATUS LIKE 'my_resource%'`
 - `SHOW GLOBAL VARIABLES`로 주기 설정
 
-### 4.5 MySQL 에러 로그에 기록
+### [4.5 MySQL 에러 로그에 기록](pages/04-ch.md#45-mysql-에러-로그에-기록)
 - `my_plugin_log_message()` 사용
 - 주의: `sql_print_information` deprecated (MySQL 8.0)
 
 ---
 
-## 제5장: 커스텀 스토리지 엔진 — Parquet 파일 읽기
+## [제5장: 커스텀 스토리지 엔진 — Parquet 파일 읽기](pages/05-ch.md)
 
-### 5.1 스토리지 엔진 아키텍처
+### [5.1 스토리지 엔진 아키텍처](pages/05-ch.md#51-스토리지-엔진-아키텍처)
 - `handler` 추상 클래스
 - `handlerton` 구조체
 - MySQL 8.0 vs MariaDB 10.6 API 차이
 
-### 5.2 핵심 클래스 설계
+### [5.2 핵심 클래스 설계](pages/05-ch.md#52-핵심-클래스-설계)
 - `Parquet_share`: 테이블 수준 공유 상태 및 락
 - `ha_parquet`: 핸들러 구현체
 - 커서 기반 스캔: `current_row` / `total_rows`
 
-### 5.3 Apache Arrow C++ 라이브러리
+### [5.3 Apache Arrow C++ 라이브러리](pages/05-ch.md#53-apache-arrow-c-라이브러리)
 - `libarrow` / `libparquet` 설치
 - `arrow::io::ReadableFile` → `parquet::arrow::FileReader`
 - `reader->ReadTable()`: 파일 전체를 메모리에 로드
 
-### 5.4 핵심 메서드 구현
+### [5.4 핵심 메서드 구현](pages/05-ch.md#54-핵심-메서드-구현)
 - `create()`: 사이드카 `.prq` 파일 생성
 - `open()` / `close()`: Arrow 테이블 로드/해제
 - `rnd_init()` / `rnd_next()` / `rnd_end()`: 풀스캔
 - `fill_row()`: Arrow 타입 → MySQL Field 변환
 
-### 5.5 Arrow → MySQL 타입 매핑
+### [5.5 Arrow → MySQL 타입 매핑](pages/05-ch.md#55-arrow-mysql-타입-매핑)
 - 정수, 실수, 문자열, 날짜, Decimal 변환
 - `DATE32`: Howard Hinnant Gregorian calendar 알고리즘
 
-### 5.6 빌드 시스템
+### [5.6 빌드 시스템](pages/05-ch.md#56-빌드-시스템)
 - MySQL/MariaDB 소스 버전 맞추기
 - CMakeLists.txt 작성
 - `build.sh`로 선택적 빌드 (전체 서버 컴파일 없이)
 
-### 5.7 사용 예시
+### [5.7 사용 예시](pages/05-ch.md#57-사용-예시)
 - `CREATE TABLE ... ENGINE=READ_PARQUET COMMENT='경로'`
 - Python으로 테스트용 Parquet 파일 생성
 - 제약 사항: 읽기 전용, 인덱스 미지원, 컬럼 순서 기반 매핑
@@ -183,15 +183,15 @@
 
 ---
 
-## 부록
+## [부록](pages/06-appendix.md)
 
-### A. MySQL UDF API 레퍼런스
+### [A. MySQL UDF API 레퍼런스](pages/06-appendix.md#부록-a-mysql-udf-api-레퍼런스)
 - `UDF_INIT`, `UDF_ARGS` 구조체 필드 전체 목록
 - 반환 타입별 함수 시그니처
 
-### B. MySQL vs MariaDB 플러그인 API 차이
+### [B. MySQL vs MariaDB 플러그인 API 차이](pages/06-appendix.md#부록-b-mysql-vs-mariadb-플러그인-api-차이)
 - UDF, Daemon Plugin, Storage Engine 별 호환성 정리
 
-### C. 빌드 환경 체크리스트
+### [C. 빌드 환경 체크리스트](pages/06-appendix.md#부록-c-빌드-환경-체크리스트)
 - macOS / Linux 필수 패키지 목록
 - 버전 호환성 매트릭스
