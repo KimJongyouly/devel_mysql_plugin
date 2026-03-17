@@ -46,11 +46,11 @@
 - `initid->ptr`로 버퍼 할당
 - `_deinit()`에서 해제
 
-### [2.3 구현: `helloworld(name)` 함수](pages/02-ch.md#23-구현-helloworldname-함수)
+### [2.3 구현: `helloworld(name)` 함수](pages/02-ch.md#23-구현-helloworldname-함수-macosmysql)
 - `"Welcome {name}, HelloWorld Mysql Plugin"` 반환
 - 문자열 조합 로직
 
-### [2.4 테스트](pages/02-ch.md#24-테스트)
+### [2.4 테스트](pages/02-ch.md#25-테스트)
 - 다양한 입력값 테스트
 - NULL 입력 처리 확인
 - 오류 케이스 확인
@@ -63,7 +63,7 @@
 - 스칼라 UDF와 집계 UDF의 차이
 - MySQL Aggregate UDF의 6단계 라이프사이클
 
-### [3.2 6개 함수 구조](pages/03-ch.md#32-6개-함수-구조)
+### [3.2 6개 함수 구조](pages/03-ch.md#32-집계-udf의-6단계-라이프사이클)
 - `_init()`: 초기화
 - `_clear()`: 그룹 초기화 (GROUP BY 핵심)
 - `_reset()`: 첫 번째 행 처리
@@ -71,13 +71,13 @@
 - 메인 함수: 결과 계산
 - `_deinit()`: 메모리 해제
 
-### [3.3 중앙값 알고리즘](pages/03-ch.md#33-중앙값-알고리즘)
+### [3.3 중앙값 알고리즘](pages/03-ch.md#33-구현-my_median-집계-udf)
 - `std::vector<double>` 누적
 - `std::sort()` 후 중앙값 추출
 - 짝수/홀수 처리
 
-### [3.4 `CREATE AGGREGATE FUNCTION` 으로 등록](pages/03-ch.md#34-create-aggregate-function-으로-등록)
-### [3.5 `GROUP BY` 와 함께 사용하기](pages/03-ch.md#35-group-by-와-함께-사용하기)
+### [3.4 `CREATE AGGREGATE FUNCTION` 으로 등록](pages/03-ch.md#34-빌드와-등록)
+### [3.5 `GROUP BY` 와 함께 사용하기](pages/03-ch.md#35-group-by와-함께-사용하기)
 
 ---
 
@@ -88,7 +88,7 @@
 - `MYSQL_DAEMON_PLUGIN` 매크로
 - UDF와의 차이점
 
-### [4.2 백그라운드 스레드 구현](pages/04-ch.md#42-백그라운드-스레드-구현)
+### [4.2 백그라운드 스레드 구현](pages/04-ch.md#43-백그라운드-스레드-구현)
 - `pthread_create()`로 모니터링 스레드 시작
 - `pthread_join()`으로 안전한 종료
 - `INSTALL PLUGIN` / `UNINSTALL PLUGIN` 연동
@@ -98,11 +98,11 @@
 - macOS: IOKit (`IOBlockStorageDriver`)
 - Linux: `sysinfo()` 시스템 콜
 
-### [4.4 MySQL STATUS 변수 노출](pages/04-ch.md#44-mysql-status-변수-노출)
+### [4.4 MySQL STATUS 변수 노출](pages/04-ch.md#44-mysql-status-변수-노출-macos-버전)
 - `SHOW STATUS LIKE 'my_resource%'`
 - `SHOW GLOBAL VARIABLES`로 주기 설정
 
-### [4.5 MySQL 에러 로그에 기록](pages/04-ch.md#45-mysql-에러-로그에-기록)
+### [4.5 MySQL 에러 로그에 기록](pages/04-ch.md#45-빌드와-설치)
 - `my_plugin_log_message()` 사용
 - 주의: `sql_print_information` deprecated (MySQL 8.0)
 
@@ -131,16 +131,16 @@
 - `rnd_init()` / `rnd_next()` / `rnd_end()`: 풀스캔
 - `fill_row()`: Arrow 타입 → MySQL Field 변환
 
-### [5.5 Arrow → MySQL 타입 매핑](pages/05-ch.md#55-arrow-mysql-타입-매핑)
+### [5.5 Arrow → MySQL 타입 매핑](pages/05-ch.md)
 - 정수, 실수, 문자열, 날짜, Decimal 변환
 - `DATE32`: Howard Hinnant Gregorian calendar 알고리즘
 
-### [5.6 빌드 시스템](pages/05-ch.md#56-빌드-시스템)
+### [5.6 빌드 시스템](pages/05-ch.md#55-빌드-시스템)
 - MySQL/MariaDB 소스 버전 맞추기
 - CMakeLists.txt 작성
 - `build.sh`로 선택적 빌드 (전체 서버 컴파일 없이)
 
-### [5.7 사용 예시](pages/05-ch.md#57-사용-예시)
+### [5.7 사용 예시](pages/05-ch.md#56-사용-방법)
 - `CREATE TABLE ... ENGINE=READ_PARQUET COMMENT='경로'`
 - Python으로 테스트용 Parquet 파일 생성
 - 제약 사항: 읽기 전용, 인덱스 미지원, 컬럼 순서 기반 매핑
