@@ -210,3 +210,14 @@ make
 | 5장 추가 | apache-arrow (Homebrew) | libarrow-dev, libparquet-dev |
 
 > **참고**: `*.so` 빌드 결과물은 커밋하지 않습니다. Mac/Linux 빌드는 각자 독립적이기 때문에 크로스컴파일은 지원하지 않습니다. 5장 스토리지 엔진을 빌드할 때는 서버 소스 버전과 설치된 서버 버전이 정확히 일치해야 합니다.
+
+## 소스 및 개발환경 
+* 소스 위치 : https://github.com/KimJongyouly/devel_mysql_plugin/blob/main/Source.tar.xz
+* 개발환경 
+  * Linux  
+    * OS : Ubuntu 22.04 LTS
+    * Database : Mariadb 11.0.4 
+  * Mac
+    * Mac : 
+    * Database : Mysql 8.0.43
+
